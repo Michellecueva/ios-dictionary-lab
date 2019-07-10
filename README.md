@@ -11,6 +11,21 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 
 - Translate at least 3 of the capital names into another language.
 
+``` swift 
+
+var citiesDict = ["Ecuador": "Quito", "Colombia": "Bogota", "Peru": "Lima"]
+
+citiesDict["Chile"] = "Santiago"
+
+citiesDict["Venezuela"] = "Caracas"
+
+citiesDict["Lima"] = "известь"
+
+citiesDict["Ecuador"] = "Кито"
+
+citiesDict["Chile"] = "Сантьяго"
+
+```
 
 ## Question 2
 
@@ -27,6 +42,48 @@ Fork and clone this repo. On your fork, answer and commit the follow questions. 
 - Remove the new keys made in the previous two steps
 
 - Add 2 to every value inside of `someDict`.
+
+``` swift 
+
+var someDict:[String:Int] = ["One": 1, "Two": 4, "Three": 9, "Four": 16, "Five": 25]
+
+if someDict["Three"] != nil {
+    print(someDict["Three"]! + someDict["Five"]!)
+}
+
+someDict["Six"] = 10
+
+someDict["Seven"] = 5
+
+var product = 1
+
+for value in someDict.values {
+    product *= value
+}
+
+someDict["productUpToSeven"] = product
+
+var sum = 0
+
+for (key, value ) in someDict {
+    if key != "Seven" && key != "productUpToSeven" {
+        sum += value
+
+    }
+}
+
+someDict["sumUpToSix"] = sum
+
+someDict.removeValue(forKey: "sumUpToSix")
+
+someDict.removeValue(forKey: "productUpToSeven")
+
+for (key , value ) in someDict {
+    someDict[key] = value + 2
+}
+
+print(someDict)
+```
 
 
 ## Question 3
@@ -50,6 +107,30 @@ Using the dictionary created in the previous problem, do the following:
 - Write an if/else statement that compares the score of John Krakaur with Mark Twain. Print out the name of the author with the highest score.
 
 - Use a for-loop to iterate through the dictionary you created at the beginning of the problem, and print out the content in the form of key: value, one entry per line.
+
+```swift 
+
+var authorScore: [String: Double] = ["Mark Twain": 8.9, "Nathaniel Hawthorne": 5.1, "John Steinbeck": 2.3, "C.S. Lewis": 9.9, "Jon Krakauer": 6.1]
+
+print(authorScore["John Steinbeck"]!)
+
+authorScore["Erik Larson"] = 9.2
+
+
+
+if authorScore["Jon Krakauer"]! > authorScore["Mark Twain"]! {
+    print("Jon Krakauer")
+} else {
+    print("Mark Twain")
+}
+
+
+
+for (key,value) in authorScore {
+    print("\(key): \(value)")
+}
+
+```
 
 
 ## Question 4
@@ -87,6 +168,20 @@ var code = [
 ]
 
 var message = "hello world"
+
+var codedMessage = ""
+
+
+for char in message {
+    print(char)
+    if let encodeCharacter = code[String(char)] {
+        codedMessage.append(encodeCharacter)
+    } else {
+        codedMessage.append(" ")
+    }
+}
+
+print(codedMessage)
 ```
 
 You are also given an `encodedMessage` which contains only lowercase letters and spaces. Use the `code` dictionary to decode the message and print it.
@@ -120,10 +215,40 @@ var people: [[String:String]] = [
         "lastName": "Bowen"
     ]
 ]
+
+var firstNames: [String] = []
+
+for element in people {
+    for (key, value) in element {
+        if key == "firstName" {
+            firstNames.append(value)
+        }
+    }
+}
+
+
+
+print(firstNames)
 ```
 
 Now, create an array of strings called `fullNames` that contains the values for `“firstName”` and `“lastName”` from the dictionary separated by a space.
+```swift
 
+var fullNames: [String] = []
+
+for person in people {
+    var fullname = ""
+    if let firstName = person["firstName"] {
+        fullname += firstName
+        if let lastName = person["lastName"] {
+            fullname += " "
+            fullname += lastName
+        }
+        fullNames.append(fullname)
+    }
+}
+print(fullNames)
+```
 
 ## Question 6
 
@@ -157,31 +282,123 @@ var peopleWithScores: [[String: String]] = [
         "score": "16"
     ]
 ]
-```
 
+
+
+var bestScore = 0
+var fullName = ""
+
+
+for person in peopleWithScores {
+    if let score = person["score"] {
+        if let firstName = person["firstName"] {
+            if let lastName = person["lastName"] {
+                if let scoreInt = Int(score) {
+                    if scoreInt > bestScore {
+                        bestScore = scoreInt
+                        fullName = ""
+                        fullName.append(firstName)
+                        fullName.append(" ")
+                        fullName.append(lastName)
+                    }
+                }
+            }
+        }
+    }
+}
+print(fullName)
+```
+``` swift
 Print out the dictionary above in the following format:  **full name - score**
 
+for person in peopleWithScores {
+    if let score = person["score"] {
+        if let firstName = person["firstName"] {
+            if let lastName = person["lastName"] {
+                print(firstName, lastName,"-", score)
+            }
+        }
+    }
+}
+
+``` 
 
 ## Question 7
 
 `var numbers = [1, 2, 3, 2, 3, 5, 2, 1, 3, 4, 2, 2, 2]`
 
 You are given an array of integers. The frequency of a number is the number of times it appears in the array. Find out the frequency of each one.
+``` swift 
 
 Print the numbers in ascending order followed by their frequency.
 
+var frequency: [Int:Int] = [:]
+
+var numbers = [1, 2, 3, 2, 3, 5, 2, 1, 3, 4, 2, 2, 2]
+
+for num in numbers {
+    if let count = frequency[num] {
+        frequency[num] = count + 1
+    } else {
+    frequency[num] = 1
+    }
+}
+
+for (key, value) in (frequency.sorted{ $0.0 < $1.0 }) {
+    print(key,":", value)
+}
+
+```
 
 ## Question 8
 
 Print the most common letter in the string below:
+``` swift 
 
 `var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."`
 
+var frequency: [String:Int] = [:]
 
+for char in myString {
+    if char == " " {
+        continue
+    }
+    if let count = frequency[char.lowercased()] {
+        frequency[char.lowercased()] =  count + 1
+    } else {
+        frequency[char.lowercased()] = 1
+    }
+}
+
+var mostCommon = ""
+var highestFrequency = 0
+
+for (key,value) in frequency {
+    if value > highestFrequency {
+        highestFrequency = value
+        mostCommon = key
+    }
+}
+
+
+print(mostCommon)
+
+```
 ## Question 9
 
 Write code that creates a dictionary where the keys are Ints between 0 and 20 inclusive, and each key's value is its cube.
+``` swift
+var range = 0...20
 
+var cubes: [Int: Int] = [:]
+
+for i in range {
+    cubes[i] = i * i * i
+}
+
+print(cubes)
+
+```
 
 ## Question 10
 
@@ -190,6 +407,15 @@ Write code that iterates through `testStates` and prints out whether or not that
 ```swift
 let statePop = ["Alabama": 4.8, "Alaska": 0.7, "Arizona": 6.7, "Arkansas": 3.0]
 let testStates = ["California","Arizona", "Alabama", "New Mexico"]
+
+for i in testStates {
+    if statePop[i] != nil {
+        print("\(i) is in statepop")
+    } else {
+        print("\(i) is not in statepop")
+    }
+}
+
 ```
 
 
@@ -217,9 +443,32 @@ var deposits: [String: [Double]] = [
 ## Question 12
 
 Print the second most common letter in the string below:
+``` swift 
 
 `var myString = "We're flooding people with information. We need to feed it through a processor. A human must turn information into intelligence or knowledge. We've tended to forget that no computer will ever ask a new question."`
 
+var frequency: [String:Int] = [:]
+
+for char in myString {
+    if char == " " {
+        continue
+    }
+    if let count = frequency[char.lowercased()] {
+        frequency[char.lowercased()] =  count + 1
+    } else {
+        frequency[char.lowercased()] = 1
+    }
+}
+
+
+
+var sortedFrequency = frequency.sorted{ $0.1 < $1.1 }
+var secMost = sortedFrequency.count-2
+
+print(sortedFrequency[secMost].0)
+
+
+```
 
 ## Question 13
 
@@ -272,4 +521,28 @@ Britain is a history of repeated injuries and usurpations, all having in direct 
 establishment of an absolute Tyranny over these States. To prove this, let Facts be submitted to a
 candid world.
 """
+
+var setOfCharacters = CharacterSet.punctuationCharacters
+setOfCharacters.insert(" ")
+setOfCharacters.insert("\n")
+
+var count = 0
+var frequency: [String: Int] = [:]
+
+for word in declarationOfIndependence.components(separatedBy: setOfCharacters) {
+    if word.count < 6 {
+        continue
+    }
+    if let count = frequency[word] {
+        frequency[word] = count + 1
+    } else {
+        frequency[word] = 1
+    }
+}
+
+var sortedFrequency = frequency.sorted{$0.1 < $1.1}
+
+var max = sortedFrequency.count-1
+
+print(sortedFrequency[max].0)
 ```
